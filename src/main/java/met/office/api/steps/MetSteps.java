@@ -6,6 +6,8 @@ import met.office.api.constants.Path;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 
+import java.util.List;
+
 public class MetSteps {
 
     @Step
@@ -16,14 +18,11 @@ public class MetSteps {
                 .then();
     }
     @Step
-    public ValidatableResponse getLocationInfo(String locationId  ){
-        System.out.println("Printing Location Id"+ locationId   );
-
+    public ValidatableResponse getLocationInfo(String locationId ){
         return SerenityRest.given()
-         //       .pathParams("key","258969c4-6bf7-4c78-87a2-109d843987aa","res","3hourly")
                 .when()
-                .get("/val/wxfcs/all/json/"+locationId+"/?res=3hourly&key=258969c4-6bf7-4c78-87a2-109d843987aa")
-                .then();
+                .get(EndPoints.GET_FORECAST_DATA,locationId)
+                .then().log().all();
 
     }
 }

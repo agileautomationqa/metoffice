@@ -31,7 +31,6 @@ public class StepsDef {
     @When("^I send request to get all sitelist endpoint data for the daily and three-hourly forecast data$")
     public void iSendRequestToGetAllSitelistEndpointDataForTheDailyAndThreeHourlyForecastData() {
         response= metSteps.getSiteListInfo();
-
     }
 
     @Then("^I should able to get a valid status code (\\d+)$")
@@ -44,20 +43,14 @@ public class StepsDef {
     @And("^I navigate sitelist and find the Location ID for \"([^\"]*)\"$")
     public void iNavigateSitelistAndFindTheLocationIDFor(String locationName)  {
         response.body("Locations.Location.name",hasItem(locationName));
-        System.out.println("Location name"+locationName );
         ArrayList<String> id = response.extract().path("Locations.Location.findAll{it.name =='" +locationName+"'}.id");
         locationId=id.get(0);
-        System.out.println("pring id"+id);
-
     }
-
-    @And("^I query daily forecast data for the location ID$")
-    public void iQueryDailyForecastDataForTheLocationID() {
-        metSteps.getLocationInfo(locationId);
-        ArrayList<?> windSpeed=  response.extract().path("SiteRep.Wx");
-        System.out.println("Wind Speed"+windSpeed);
-        System.out.println("Location id"+locationId);
-
+     @And("^I query daily forecast data for the \"([^\"]*)\" location$")
+    public void iQueryDailyForecastDataForTheLocation(String locationName)  {
+        response= metSteps.getLocationInfo(locationId);
+        response.body("SiteRep.Wx.Param.findAll{it.name == 'S'}.$",hasItem("Wind Speed"));
+        response.body("SiteRep.DV.Location",hasValue(locationName.toUpperCase()));
 
 
     }
