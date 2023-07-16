@@ -23,6 +23,7 @@ public class MetSteps {
          //       .pathParams("key","258969c4-6bf7-4c78-87a2-109d843987aa","res","3hourly")
                 .when()
                 .get("/val/wxfcs/all/json/"+locationId+"/?res=3hourly&key=258969c4-6bf7-4c78-87a2-109d843987aa")
-                .then().log().all();
+                .then();
+
     }
 }

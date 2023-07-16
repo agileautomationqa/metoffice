@@ -53,9 +53,9 @@ public class StepsDef {
 
     @And("^I query daily forecast data for the location ID$")
     public void iQueryDailyForecastDataForTheLocationID() {
-
-        response = metSteps.getLocationInfo(locationId);
-
+        metSteps.getLocationInfo(locationId);
+        ArrayList<?> windSpeed=  response.extract().path("SiteRep.Wx");
+        System.out.println("Wind Speed"+windSpeed);
         System.out.println("Location id"+locationId);
 
 
